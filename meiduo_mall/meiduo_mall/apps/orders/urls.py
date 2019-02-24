@@ -1,0 +1,12 @@
+from django.conf.urls import url
+from . import views
+
+urlpatterns=[
+
+    url(r'^orders/settlement/$',views.OrderSettlementView.as_view()),
+
+    url(r'^order/$',views.SaveOrderView.as_view()),
+
+    url(r'^orders/$',views.GetOrdersView.as_view()),
+
+]
