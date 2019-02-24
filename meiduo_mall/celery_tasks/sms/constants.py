@@ -1,4 +1,0 @@
-
-
-
-SMS_CODE_REDIS_EXPIRES=300  #验证码过期时间
