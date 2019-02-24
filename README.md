@@ -1,0 +1,2 @@
+# meiduo-item
+Django item
