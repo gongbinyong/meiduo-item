@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'^', include('orders.urls')),
     # 支付模块
     url(r'^', include('payment.urls')),
+    # 支付模块
+    url(r'^', include('image_code.urls')),
 ]

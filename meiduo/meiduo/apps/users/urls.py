@@ -18,6 +18,8 @@ urlpatterns = [
     url(r'^emails/verification/$', views.EmailVerifyView.as_view()),
     # 浏览记录
     url(r'^browse_histories/$', views.UserBrowseHistoryView.as_view()),
+    # /users/user_id/password/
+    url(r'^users/(?P<user_id>\d{1,11})/password/$', views.UndefinedPassowordView.as_view())
 ]
 
 router = DefaultRouter()

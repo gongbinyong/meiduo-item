@@ -16,7 +16,8 @@ from carts.utils import merge_cart_cookie_to_redis
 from goods.models import SKU
 from goods.serializers import SKUSerializer
 from .models import User
-from .serializers import UserSerializer, UserDetailSerializer, EmailSerializer, UserAddressSerializer, AddressTitleSerializer, UserBrowseHistorySerializer
+from .serializers import UserSerializer, UserDetailSerializer, EmailSerializer, UserAddressSerializer, \
+    AddressTitleSerializer, UserBrowseHistorySerializer, UpdatePasswordSerializer
 
 
 class UserView(CreateAPIView):
@@ -202,3 +203,18 @@ class UserAuthorizeView(ObtainJSONWebToken):
             merge_cart_cookie_to_redis(request, user, response)
 
         return response
+
+
+class UndefinedPassowordView(APIView):
+    """修改密码"""
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, user_id):
+        user = request.user
+        if not user.check_password(request.data.get('old_password')):
+            return Response({'message': '当前密码错误'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = UpdatePasswordSerializer(user, request.data)
+        serializer.is_valid(raise_exception=True)
+        user.set_password(serializer.validated_data["password"])
+        user.save()
+        return Response({"message": "OK"})

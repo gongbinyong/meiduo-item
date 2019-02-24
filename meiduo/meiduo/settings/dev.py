@@ -171,6 +171,13 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
+    "image": {  # 存储图片验证码
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.146.142:6379/5",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
@@ -253,6 +260,11 @@ AUTHENTICATION_BACKENDS = [
 QQ_CLIENT_ID = '101514053'
 QQ_CLIENT_SECRET = '1075e75648566262ea35afa688073012'
 QQ_REDIRECT_URI = 'http://www.meiduo.site:8080/oauth_callback.html'
+
+# 微博登录参数
+APP_KEY = '3305669385'
+APP_SECRET = '74c7bea69d5fc64f5c3b80c802325276'
+REDIRECT_URL = 'http://www.meiduo.site:8080/sina_callback.html'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

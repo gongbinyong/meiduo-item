@@ -1,7 +1,8 @@
 import re
 
 from django_redis import get_redis_connection
-from rest_framework import serializers
+from rest_framework import serializers, status
+from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
 
 from goods.models import SKU
@@ -75,6 +76,21 @@ class UserSerializer(serializers.ModelSerializer):
         user.token = token
 
         return user
+
+
+class UpdatePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(label='旧密码', write_only=True, required=True)
+    password = serializers.CharField(label='新密码', min_length=8, max_length=20, write_only=True, required=True)
+    password2 = serializers.CharField(label='确认密码', write_only=True, required=True)
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError('两次密码不一致')
+        return data
+
+
+
+
 
 
 class UserDetailSerializer(serializers.ModelSerializer):

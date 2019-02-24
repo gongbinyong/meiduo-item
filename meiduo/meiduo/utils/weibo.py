@@ -43,6 +43,6 @@ class OAuth_WEIBO(OAuth_Base):
         }
         response = self._post('https://api.weibo.com/oauth2/access_token', params)
         result = json.loads(response.decode('utf-8'))
-        self.access_token = result["access_token"]
-        # self.openid = result["uid"]
-        return self.access_token
+        # self.access_token = result["access_token"]
+        self.openid = result["uid"]
+        return self.openid

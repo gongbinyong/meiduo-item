@@ -2,7 +2,9 @@ from django.http import HttpResponse
 from django_redis import get_redis_connection
 from rest_framework.views import APIView
 
-from utils.captcha.captcha import captcha
+
+from meiduo.utils.captcha import captcha
+
 
 class ImageCodes(APIView):
     def get(self,request,image):
@@ -10,7 +12,7 @@ class ImageCodes(APIView):
         redis_conn = get_redis_connection('image')
 
         # 3.1 生成验证码图片，验证码图片的真实值
-        image_name, real_image_code, image_data = captcha.generate_captcha()
+        image_name, real_image_code, image_data = captcha.captcha.generate_captcha()
 
         # 3.2 code_id作为key将验证码图片的真实值保存到redis数据库，并且设置有效时长(5分钟)
         try:
