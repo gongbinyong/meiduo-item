@@ -200,7 +200,6 @@ class CommentSerializer(serializers.ModelSerializer):
                 sku.comments += 1
                 sku.save()
             except Exception as e:
-                print(e)
                 transaction.savepoint_rollback(save_point)
                 raise serializers.ValidationError("商品评论失败")
             else:

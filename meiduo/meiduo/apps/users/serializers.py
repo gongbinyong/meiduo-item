@@ -89,10 +89,6 @@ class UpdatePasswordSerializer(serializers.Serializer):
         return data
 
 
-
-
-
-
 class UserDetailSerializer(serializers.ModelSerializer):
     """
     用户详细信息序列化器

@@ -114,7 +114,7 @@ class UncommentView(APIView):
         try:
             OrderInfo.objects.get(order_id=order_id, status=4)
         except OrderInfo.DoesNotExist:
-            return Response({"message": "xxx"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "订单号不存在"}, status=status.HTTP_400_BAD_REQUEST)
         query_sets = OrderGoods.objects.filter(order_id=order_id, is_commented=False)
         serializer = UncommentSerializer(query_sets, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
