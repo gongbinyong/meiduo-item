@@ -295,25 +295,17 @@ class PasswordModifySerilizer(serializers.ModelSerializer):
 
     def validate_access_token(self,data):
         # 手动解开生成token
-
         jwt_payload_get_username_handler = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER  # 加载载荷生成username函数
-
         jwt_decode_handler = api_settings.JWT_DECODE_HANDLER  # 加载生成token函数
-
         payload = jwt_decode_handler(data)  # 根据token载荷解密得到payload
-
         user = jwt_payload_get_username_handler(payload)  #
-
         return user
-
-
 
     def validate(self,data):
         # 判断两次密码
         if data['password'] != data['password2']:
             raise serializers.ValidationError('两次密码不⼀致')
         return data
-
 
     def update(self, instance, validated_data):
         """重写create方法"""
@@ -322,17 +314,13 @@ class PasswordModifySerilizer(serializers.ModelSerializer):
         del validated_data['password2']
         instance.set_password(validated_data['password'])
         instance.save()
-
         print(instance.username)
         # 手动生成token
         user=User.objects.get(username=instance.username)
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER  # 加载生成载荷函数
-
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER  # 加载生成token函数
         payload = jwt_payload_handler(user)  # 生成载荷
         token = jwt_encode_handler(payload)  # 根据载荷生成token
-
         # 给user多添加一个属性
         user.token = token
-
         return user
