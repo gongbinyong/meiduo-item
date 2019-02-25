@@ -225,14 +225,6 @@ class ImageCodeSerilizer(serializers.ModelSerializer):
         except User.DoesNotExist:
             return None
 
-            #         } else if (error.response.status == 404) {
-            #         this.error_username_message = '用户名或手机号不存在';
-            #         this.error_username = true;
-            #     } else {
-            #     console.log(error.response.data);
-            #
-            # }
-
         # 通过验证的username账户执行以下操作
 
         # 查找该用户的手机号
@@ -275,11 +267,8 @@ class SmsCodeSerilizer(serializers.ModelSerializer):
 
         jwt_payload_get_username_handler = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER  # 加载载荷生成username函数
         jwt_decode_handler = api_settings.JWT_DECODE_HANDLER  # 加载生成token函数
-        # print('1')
         payload = jwt_decode_handler(token)  # 根据token载荷解密得到payload
-        # print('2')
         username = jwt_payload_get_username_handler(payload)  #
-        # print('3')
         return username
 
 
@@ -330,10 +319,7 @@ class PasswordModifySerilizer(serializers.ModelSerializer):
         """重写create方法"""
         # validated_data的字段:'username', 'password', 'password2', 'mobile', 'sms_code', 'allow'
         # 真正需要存储到mysql中的字段:username password mobile
-        # print('1')
         del validated_data['password2']
-        # print('2')
-        # print(instance)
         instance.set_password(validated_data['password'])
         instance.save()
 
@@ -343,9 +329,7 @@ class PasswordModifySerilizer(serializers.ModelSerializer):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER  # 加载生成载荷函数
 
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER  # 加载生成token函数
-        print('1')
         payload = jwt_payload_handler(user)  # 生成载荷
-        print('2')
         token = jwt_encode_handler(payload)  # 根据载荷生成token
 
         # 给user多添加一个属性
