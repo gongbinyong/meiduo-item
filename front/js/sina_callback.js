@@ -183,6 +183,7 @@ var vm = new Vue({
                     access_token: this.access_token
                 }, {
                     responseType: 'json',
+                    withCredentials: true
                 })
                     .then(response => {
                         // 记录用户登录状态
